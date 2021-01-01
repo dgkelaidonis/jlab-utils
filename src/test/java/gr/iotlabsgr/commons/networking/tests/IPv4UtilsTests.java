@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import gr.iotlabsgr.commons.networking.IPv4Utils;
 
-public class IPv4UtilsTest {
+public class IPv4UtilsTests {
     public final String CIDR = "192.168.32.1/24";
     public final String CIDR_DEFAULT_IP_RAW = "192.168.32.1";
     public final String CIDR_DEFAULT_IP_BINARY = "11000000101010000010000000000001";

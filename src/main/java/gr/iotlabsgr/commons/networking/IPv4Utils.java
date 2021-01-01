@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 
-import gr.iotlabsgr.commons.bit.BitUtils;
+import gr.iotlabsgr.commons.bits.BitUtils;
 
 public class IPv4Utils {
 

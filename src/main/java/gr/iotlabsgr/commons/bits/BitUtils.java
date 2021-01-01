@@ -1,4 +1,4 @@
-package gr.iotlabsgr.commons.bit;
+package gr.iotlabsgr.commons.bits;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -13,24 +13,51 @@ public class BitUtils {
 	else if (dataObject instanceof BigInteger)
 	    return ((BigInteger) dataObject).toString(2);
 	else if (dataObject instanceof String)
-	    return byteArrayToBinary(((String) dataObject).getBytes());
+	    return bytesToBinary(((String) dataObject).getBytes());
 	else
 	    return null;
     }
 
-    public static Integer binaryToInteger(String binaryString) {
-	return new BigInteger(binaryString, 2).intValueExact();
+    public static <T> T binaryToObject(String binaryString, Class<T> clazz) {
+	if (clazz.getTypeName().equals(Integer.class.getTypeName()))
+	    return (T) binaryToInteger(binaryString);
+	else if (clazz.getTypeName().equals(Long.class.getTypeName()))
+	    return (T) binaryToLong(binaryString);
+	else if (clazz.getTypeName().equals(BigInteger.class.getTypeName()))
+	    return (T) binaryToBigInteger(binaryString);
+	else if (clazz.getTypeName().equals(String.class.getTypeName()))
+	    return (T) binaryToString(binaryString);
+	else if (clazz.isArray() && clazz.getTypeName().equals(Integer.class.getTypeName()))
+	    return (T) binaryToByteArray(binaryString);
+	else
+	    return null;
     }
 
     public static BigInteger binaryToBigInteger(String binaryString) {
 	return new BigInteger(binaryString, 2);
     }
 
+    public static byte[] binaryToByteArray(String binaryString) {
+	int CHAR_BIT_BLOCK = 8; // 8-bit = 1 char
+	int BINARY_SIZE = binaryString.length(); // number of binary digits
+	int BLOCKS_OF_BYTES = BINARY_SIZE / CHAR_BIT_BLOCK;// total chars
+	byte[] bytes = new byte[BLOCKS_OF_BYTES];
+	for (int blockIndex = 0; blockIndex < BLOCKS_OF_BYTES; blockIndex++) {
+	    bytes[blockIndex] = Byte.parseByte(
+		    binaryString.substring(CHAR_BIT_BLOCK * blockIndex, (blockIndex + 1) * CHAR_BIT_BLOCK), 2);
+	}
+	return bytes;
+    }
+
+    public static Integer binaryToInteger(String binaryString) {
+	return new BigInteger(binaryString, 2).intValueExact();
+    }
+
     public static Long binaryToLong(String binaryString) {
 	return Long.parseLong(binaryString, 2);
     }
 
-    public static String binaryToString(String binaryString) throws UnsupportedEncodingException {
+    public static String binaryToString(String binaryString) {
 	int CHAR_BIT_BLOCK = 8; // 8-bit = 1 char
 	int BINARY_SIZE = binaryString.length(); // number of binary digits
 	int BINARY_BIT_BLOCKS = BINARY_SIZE / CHAR_BIT_BLOCK;// total chars
@@ -42,7 +69,7 @@ public class BitUtils {
 	return stringResult;
     }
 
-    public static String byteArrayToBinary(byte[] byteArray) {
+    public static String bytesToBinary(byte[] byteArray) {
 	StringBuilder binary = new StringBuilder();
 	for (byte byteVal : byteArray) {
 	    int bitsOfByte = byteVal;
@@ -75,12 +102,11 @@ public class BitUtils {
     }
 
     public static void main(String[] args) throws NumberFormatException, UnsupportedEncodingException {
-	String string = "Hello World!!!";
+	String string = "Hello World!";
 	String binary = BitUtils.objectToBinary(string);
-	System.out.println(string);
+	System.out.println("String: " + string);
 	System.out.println("  - String to binary: " + binary);
-	string = BitUtils.binaryToString(binary);
+	string = (String) BitUtils.binaryToObject(binary, String.class);
 	System.out.println("  - Binary to string: " + string);
-
     }
 }
