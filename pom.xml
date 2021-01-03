@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>gr.iotlabsgr.commons</groupId>
 	<artifactId>jlab-utils</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>jlab-utils</name>
 	<description>This project provides reusable open-source Java software to developers, covering a wide range of topics such as networking, file management, data management, etc.</description>
 	<developers>
