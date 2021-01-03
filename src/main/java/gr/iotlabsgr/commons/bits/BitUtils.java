@@ -97,7 +97,7 @@ public class BitUtils {
 	return binaryToBigInteger(binary).shiftLeft(shiftDistanseInBits).toString(2);
     }
 
-    public String binaryShiftRight(String binary, int shiftDistanseInBits) {
+    public static String binaryShiftRight(String binary, int shiftDistanseInBits) {
 	return binaryToBigInteger(binary).shiftRight(shiftDistanseInBits).toString(2);
     }
 

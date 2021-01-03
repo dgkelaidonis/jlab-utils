@@ -61,7 +61,7 @@ public class IPv4Utils {
     public String getFirstCidrIPv4AddressBinary(String cidr) throws UnknownHostException {
 	String ipv4 = cidr.split("/")[0];
 	int prefix = Integer.parseInt(cidr.split("/")[1]);
-	String ipv4Binary = ipv4RawToBinary(InetAddress.getByName(ipv4));
+	String ipv4Binary = ipv4ToBinary(InetAddress.getByName(ipv4));
 	/* total bits position 32-n */
 	int totalNumberOfBits = 32 - prefix;
 	/* first address: set last ' 32-n' bits of IP address to 0 */
@@ -94,7 +94,7 @@ public class IPv4Utils {
     public String getLastCidrIPv4AddressBinary(String cidr) throws UnknownHostException {
 	String ipv4 = cidr.split("/")[0];
 	int prefix = Integer.parseInt(cidr.split("/")[1]);
-	String ipv4Binary = ipv4RawToBinary(InetAddress.getByName(ipv4));
+	String ipv4Binary = ipv4ToBinary(InetAddress.getByName(ipv4));
 	/* total bits position 32-n */
 	int totalNumberOfBits = 32 - prefix;
 	/* last address: set last '32-n' bits of IP address to 1 */
@@ -114,16 +114,6 @@ public class IPv4Utils {
     }
 
     /**
-     * This method converts an IPv4 into Big Decimal.
-     * 
-     * @param ipv4 IPv4 in format x.y.z.t
-     * @return The Big Integer value of the given IPv4
-     */
-    public BigInteger ipv4RawToBigInteger(InetAddress ipv4) {
-	return new BigInteger(1, ipv4.getAddress());
-    }
-
-    /**
      * This method convert the given IPv4 (of InetAddress data-type), into binary
      * string (i.e. sequence of bits '010101101', etc.) .
      * 
@@ -133,25 +123,11 @@ public class IPv4Utils {
      * @return Binary string of the given IPv4 InetAddress.
      * @throws UnknownHostException
      */
-    public String ipv4RawToBinary(InetAddress ipv4) throws UnknownHostException {
+    public String ipv4ToBinary(InetAddress ipv4) throws UnknownHostException {
 	/* 2 means binary representation format */
 	System.out.println(ipv4.getAddress().toString());
 
 	return new BigInteger(1, ipv4.getAddress()).toString(2);
-    }
-
-    /**
-     * This method convert the given IPv4 (of InetAddress data-type), into Long
-     * value.
-     * 
-     * Maximum range of values: as Long = (2^64).
-     * 
-     * @param ipv4 IPv4 in format x.y.z.t
-     * @return The long value of the of the given IPv4 InetAddress.
-     * @throws UnknownHostException
-     */
-    public Long ipv4RawToLong(InetAddress ipv4) throws UnknownHostException {
-	return BitUtils.binaryToLong(ipv4RawToBinary(ipv4));
     }
 
     /**
@@ -163,7 +139,7 @@ public class IPv4Utils {
      * @throws UnknownHostException
      */
     public boolean ipv4BelongsToCidr(InetAddress targetIp, String cidr) throws UnknownHostException {
-	Long target = ipv4RawToLong(targetIp);
+	Long target = BitUtils.binaryToLong(ipv4ToBinary(targetIp));// ipv4RawToLong(targetIp);
 	Long first = getFirstCidrIPv4AddressLong(cidr);
 	Long last = getLastCidrIPv4AddressLong(cidr);
 	return first < target && target < last;
@@ -187,11 +163,4 @@ public class IPv4Utils {
 	/* replace the last N bits of the given binary, with the the new bits values */
 	return binary.substring(0, binary.length() - bitsNum).concat(new String(updatedBitSequence));
     }
-
-    public static void main(String[] args) throws UnknownHostException {
-	IPv4Utils ip = new IPv4Utils();
-	ip.ipv4RawToBinary(InetAddress.getByName("192.168.1.1"));
-
-    }
-
 }
