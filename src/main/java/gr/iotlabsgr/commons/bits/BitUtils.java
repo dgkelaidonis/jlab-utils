@@ -1,6 +1,5 @@
 package gr.iotlabsgr.commons.bits;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 
 public class BitUtils {
@@ -99,14 +98,5 @@ public class BitUtils {
 
     public static String binaryShiftRight(String binary, int shiftDistanseInBits) {
 	return binaryToBigInteger(binary).shiftRight(shiftDistanseInBits).toString(2);
-    }
-
-    public static void main(String[] args) throws NumberFormatException, UnsupportedEncodingException {
-	String string = "Hello World!";
-	String binary = BitUtils.objectToBinary(string);
-	System.out.println("String: " + string);
-	System.out.println("  - String to binary: " + binary);
-	string = (String) BitUtils.binaryToObject(binary, String.class);
-	System.out.println("  - Binary to string: " + string);
     }
 }

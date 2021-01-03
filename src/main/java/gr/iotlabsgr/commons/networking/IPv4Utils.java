@@ -124,9 +124,7 @@ public class IPv4Utils {
      * @throws UnknownHostException
      */
     public String ipv4ToBinary(InetAddress ipv4) throws UnknownHostException {
-	/* 2 means binary representation format */
-	System.out.println(ipv4.getAddress().toString());
-
+	/* convert IPv4 to BigInteger and return it as Binary string */
 	return new BigInteger(1, ipv4.getAddress()).toString(2);
     }
 
