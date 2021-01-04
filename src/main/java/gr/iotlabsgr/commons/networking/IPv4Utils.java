@@ -1,9 +1,12 @@
 package gr.iotlabsgr.commons.networking;
 
 import java.math.BigInteger;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +27,50 @@ public class IPv4Utils {
 	return (request != null) && (request.getHeader("X-Forwarded-For") != null)
 		&& (!request.getHeader("X-Forwarded-For").isEmpty()) ? request.getHeader("X-Forwarded-For")
 			: request.getRemoteAddr();
+    }
+
+    /**
+     * This method uses a pattern for complement the CIDR format x.y.z.t/n
+     * 
+     * @param cidr
+     * @return
+     */
+    public boolean isValidCidr(String cidr) {
+	Pattern cidrPattern = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3}/\\d{1,2})$");
+	Matcher matcher = cidrPattern.matcher(cidr);
+	return matcher.find();
+    }
+
+    /**
+     * 
+     * @param ip
+     * @return
+     */
+    public boolean isValidIPv4(String ip) {
+	try {
+	    Inet4Address.getByName(ip);
+	    return true;
+	} catch (UnknownHostException e) {
+	    e.printStackTrace();
+	    return false;
+	}
+    }
+
+    /**
+     * In the Internet Protocol Version 4, the address 0.0.0.0 is a non-routable
+     * meta-address used to designate an invalid, unknown or non-applicable target.
+     * This address is assigned specific meanings in a number of contexts, such as
+     * on clients or on servers.
+     * 
+     * @param ipv4OrCidr Should be in form of 0.0.0.0 as IPv4, or 0.0.0.0/0 as CIDR.
+     * @return True/False based on the concluded result for the given address
+     */
+    public boolean isNonRoutableAddress(String ipv4OrCidr) {
+	return isValidCidr(ipv4OrCidr) || isValidIPv4(ipv4OrCidr) ? ipv4OrCidr.contains("0.0.0.0") : false;
+    }
+
+    public boolean isLocalhostAddress(String ipv4) {
+	return isValidIPv4(ipv4) && ipv4.equals("127.0.0.1");
     }
 
     /**
