@@ -19,9 +19,8 @@ public class DataStructureUtils {
      */
     public static Map<String, Integer> countListElementOccurrences(ArrayList<String> list) {
 	Map<String, Integer> elementsMap = new HashMap<String, Integer>();
-	for (String i : list) {
-	    Integer j = elementsMap.get(i);
-	    elementsMap.put(i, (j == null) ? 1 : j + 1);
+	for (String e : list) {
+	    elementsMap.put(e, (elementsMap.get(e) != null) ? elementsMap.get(e) + 1 : 1);
 	}
 	return elementsMap;
     }
