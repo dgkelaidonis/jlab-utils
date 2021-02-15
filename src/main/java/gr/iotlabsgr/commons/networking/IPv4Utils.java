@@ -23,7 +23,7 @@ public class IPv4Utils {
      *                properties, for manipulating the incoming HTTP request.
      * @return The client IPv4/IPv6 form, as string data type.
      */
-    public String getClientIp(HttpServletRequest request) {
+    public static String getClientIp(HttpServletRequest request) {
 	return (request != null) && (request.getHeader("X-Forwarded-For") != null)
 		&& (!request.getHeader("X-Forwarded-For").isEmpty()) ? request.getHeader("X-Forwarded-For")
 			: request.getRemoteAddr();
@@ -35,7 +35,7 @@ public class IPv4Utils {
      * @param cidr
      * @return
      */
-    public boolean isValidCidr(String cidr) {
+    public static boolean isValidCidr(String cidr) {
 	Pattern cidrPattern = Pattern.compile("^(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3}/\\d{1,2})$");
 	Matcher matcher = cidrPattern.matcher(cidr);
 	return matcher.find();
@@ -46,7 +46,7 @@ public class IPv4Utils {
      * @param ip
      * @return
      */
-    public boolean isValidIPv4(String ip) {
+    public static boolean isValidIPv4(String ip) {
 	try {
 	    Inet4Address.getByName(ip);
 	    return true;
@@ -65,11 +65,11 @@ public class IPv4Utils {
      * @param ipv4OrCidr Should be in form of 0.0.0.0 as IPv4, or 0.0.0.0/0 as CIDR.
      * @return True/False based on the concluded result for the given address
      */
-    public boolean isNonRoutableAddress(String ipv4OrCidr) {
+    public static boolean isNonRoutableAddress(String ipv4OrCidr) {
 	return isValidCidr(ipv4OrCidr) || isValidIPv4(ipv4OrCidr) ? ipv4OrCidr.contains("0.0.0.0") : false;
     }
 
-    public boolean isLocalhostAddress(String ipv4) {
+    public static boolean isLocalhostAddress(String ipv4) {
 	return isValidIPv4(ipv4) && ipv4.equals("127.0.0.1");
     }
 
@@ -80,7 +80,7 @@ public class IPv4Utils {
      * @param ipv4 As string in form of x.y.z.t
      * @return The letter (A-E), that corresponds to the class of the given IP
      */
-    public char getIPv4Class(InetAddress ipv4) {
+    public static char getIPv4Class(InetAddress ipv4) {
 	int a = Integer.parseInt(ipv4.getHostAddress().split("\\.")[0]);
 	if (a >= 0 && a <= 127)
 	    return ('A');
@@ -105,7 +105,7 @@ public class IPv4Utils {
      * @return The binary sequence of the last IPv4 address.
      * @throws UnknownHostException
      */
-    public String getFirstCidrIPv4AddressBinary(String cidr) throws UnknownHostException {
+    public static String getFirstCidrIPv4AddressBinary(String cidr) throws UnknownHostException {
 	String ipv4 = cidr.split("/")[0];
 	int prefix = Integer.parseInt(cidr.split("/")[1]);
 	String ipv4Binary = ipv4ToBinary(InetAddress.getByName(ipv4));
@@ -123,7 +123,7 @@ public class IPv4Utils {
      * @return The Long value of the first IPv4 address.
      * @throws UnknownHostException
      */
-    public Long getFirstCidrIPv4AddressLong(String cidr) throws UnknownHostException {
+    public static Long getFirstCidrIPv4AddressLong(String cidr) throws UnknownHostException {
 	return BitUtils.binaryToLong(getFirstCidrIPv4AddressBinary(cidr));
     }
 
@@ -138,7 +138,7 @@ public class IPv4Utils {
      * @return The binary sequence of the last IPv4 address.
      * @throws UnknownHostException
      */
-    public String getLastCidrIPv4AddressBinary(String cidr) throws UnknownHostException {
+    public static String getLastCidrIPv4AddressBinary(String cidr) throws UnknownHostException {
 	String ipv4 = cidr.split("/")[0];
 	int prefix = Integer.parseInt(cidr.split("/")[1]);
 	String ipv4Binary = ipv4ToBinary(InetAddress.getByName(ipv4));
@@ -156,7 +156,7 @@ public class IPv4Utils {
      * @return The Long value of the last IPv4 address.
      * @throws UnknownHostException
      */
-    public Long getLastCidrIPv4AddressLong(String cidr) throws UnknownHostException {
+    public static Long getLastCidrIPv4AddressLong(String cidr) throws UnknownHostException {
 	return BitUtils.binaryToLong(getLastCidrIPv4AddressBinary(cidr));
     }
 
@@ -170,7 +170,7 @@ public class IPv4Utils {
      * @return Binary string of the given IPv4 InetAddress.
      * @throws UnknownHostException
      */
-    public String ipv4ToBinary(InetAddress ipv4) throws UnknownHostException {
+    public static String ipv4ToBinary(InetAddress ipv4) throws UnknownHostException {
 	/* convert IPv4 to BigInteger and return it as Binary string */
 	return new BigInteger(1, ipv4.getAddress()).toString(2);
     }
@@ -183,7 +183,7 @@ public class IPv4Utils {
      * @return True/ False whether IPv4 belongs to the CIDR or not, respectively.
      * @throws UnknownHostException
      */
-    public boolean ipv4BelongsToCidr(InetAddress targetIp, String cidr) throws UnknownHostException {
+    public static boolean ipv4BelongsToCidr(InetAddress targetIp, String cidr) throws UnknownHostException {
 	Long target = BitUtils.binaryToLong(ipv4ToBinary(targetIp));// ipv4RawToLong(targetIp);
 	Long first = getFirstCidrIPv4AddressLong(cidr);
 	Long last = getLastCidrIPv4AddressLong(cidr);
@@ -200,7 +200,7 @@ public class IPv4Utils {
      *                 values 0 or 1)
      * @return
      */
-    public String setLastNbitsOfBinary(String binary, int bitsNum, char bitValue) {
+    public static String setLastNbitsOfBinary(String binary, int bitsNum, char bitValue) {
 	/* i : total number of bit positions that should be updated */
 	char[] updatedBitSequence = new char[bitsNum];
 	/* array contains the same bit value (0/1) */

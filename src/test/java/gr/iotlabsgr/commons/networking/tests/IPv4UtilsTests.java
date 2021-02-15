@@ -15,11 +15,9 @@ import gr.iotlabsgr.commons.networking.IPv4Utils;
 public class IPv4UtilsTests {
     private String cidr, cidr_default_ip, cidr_default_ip_binary, cidr_first_ip_binary, cidr_last_ip_binary,
 	    ip_into_range, ip_out_of_range, localhost, validIp, invalidIp, validCidr, invalidCidr;
-    public IPv4Utils ipv4Utils;
 
     @Before
-    public void initializeClassUnderTesting() {
-	ipv4Utils = new IPv4Utils();
+    public void init() {
 	cidr = "192.168.32.1/24";
 	cidr_default_ip = "192.168.32.1";
 	cidr_default_ip_binary = "11000000101010000010000000000001";
@@ -36,57 +34,57 @@ public class IPv4UtilsTests {
 
     @Test
     public void test_isValidCidr() {
-	assertTrue(ipv4Utils.isValidCidr(validCidr));
+	assertTrue(IPv4Utils.isValidCidr(validCidr));
     }
 
     @Test
     public void test_isValidCidr_False() {
-	assertFalse(ipv4Utils.isValidCidr(invalidCidr));
+	assertFalse(IPv4Utils.isValidCidr(invalidCidr));
     }
 
     @Test
     public void test_isValidIPv4() {
-	assertTrue(ipv4Utils.isValidIPv4(validIp));
+	assertTrue(IPv4Utils.isValidIPv4(validIp));
     }
 
     @Test
     public void test_isValidIPv4_False() {
-	assertFalse(ipv4Utils.isValidIPv4(invalidIp));
+	assertFalse(IPv4Utils.isValidIPv4(invalidIp));
     }
 
     @Test
     public void test_isLocalhost() {
-	assertTrue(ipv4Utils.isLocalhostAddress(localhost));
+	assertTrue(IPv4Utils.isLocalhostAddress(localhost));
     }
 
     @Test
     public void test_IPv4RawToBinary() throws UnknownHostException {
-	assertEquals(cidr_default_ip_binary, ipv4Utils.ipv4ToBinary(InetAddress.getByName(cidr_default_ip)));
+	assertEquals(cidr_default_ip_binary, IPv4Utils.ipv4ToBinary(InetAddress.getByName(cidr_default_ip)));
     }
 
     @Test
     public void test_getIPv4Class() throws UnknownHostException {
 	assertEquals("Checking the class of the IP " + cidr_default_ip, 'C',
-		ipv4Utils.getIPv4Class(InetAddress.getByName(cidr_default_ip)));
+		IPv4Utils.getIPv4Class(InetAddress.getByName(cidr_default_ip)));
     }
 
     @Test
     public void test_getFirstCidrIPv4AddressBinary() throws UnknownHostException {
-	assertEquals(cidr_first_ip_binary, ipv4Utils.getFirstCidrIPv4AddressBinary(cidr));
+	assertEquals(cidr_first_ip_binary, IPv4Utils.getFirstCidrIPv4AddressBinary(cidr));
     }
 
     @Test
     public void test_getLastCidrIPv4AddressBinary() throws UnknownHostException {
-	assertEquals(cidr_last_ip_binary, ipv4Utils.getLastCidrIPv4AddressBinary(cidr));
+	assertEquals(cidr_last_ip_binary, IPv4Utils.getLastCidrIPv4AddressBinary(cidr));
     }
 
     @Test
     public void test_ipv4BelongsToCidr() throws UnknownHostException {
-	assertTrue(ipv4Utils.ipv4BelongsToCidr(InetAddress.getByName(ip_into_range), cidr));
+	assertTrue(IPv4Utils.ipv4BelongsToCidr(InetAddress.getByName(ip_into_range), cidr));
     }
 
     @Test
     public void test_ipv4BelongsToCidr_False() throws UnknownHostException {
-	assertFalse(ipv4Utils.ipv4BelongsToCidr(InetAddress.getByName(ip_out_of_range), cidr));
+	assertFalse(IPv4Utils.ipv4BelongsToCidr(InetAddress.getByName(ip_out_of_range), cidr));
     }
 }
