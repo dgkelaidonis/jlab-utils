@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +19,8 @@ public class AccessControlUtilsTests {
     private String allowedCidr;
     private String clientId;
     private String clientApiKey;
-    private Set<String> allowedClientIds;
-    private Set<String> allowedClientApiKey;
+    private List<String> allowedClientIds;
+    private List<String> allowedClientApiKey;
 
     @Before
     public void init() throws UnknownHostException {
@@ -28,9 +28,9 @@ public class AccessControlUtilsTests {
 	allowedCidr = "192.168.1.1/24";
 	clientId = "unique-identifier-012345";
 	clientApiKey = "very-long-token-in-sha256-sha-512-etc.";
-	allowedClientIds = new HashSet<String>();
+	allowedClientIds = new ArrayList<String>();
 	allowedClientIds.add(clientId);
-	allowedClientApiKey = new HashSet<String>();
+	allowedClientApiKey = new ArrayList<String>();
 	allowedClientApiKey.add(clientApiKey);
     }
 

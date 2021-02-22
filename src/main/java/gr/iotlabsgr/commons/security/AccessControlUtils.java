@@ -2,7 +2,7 @@ package gr.iotlabsgr.commons.security;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
-import java.util.Set;
+import java.util.List;
 
 import gr.iotlabsgr.commons.networking.IPv4Utils;
 
@@ -53,7 +53,7 @@ public class AccessControlUtils {
      * @param clientApiKey        The API-KEY of a client that should be checked by
      * @return
      */
-    public static boolean isAuthorizedApiClient(Set<String> authorizedClientIds, Set<String> authorizedApiKeys,
+    public static boolean isAuthorizedApiClient(List<String> authorizedClientIds, List<String> authorizedApiKeys,
 	    String clientId, String clientApiKey) {
 	/* since IP access is approved, check the client accessibility keys */
 	return clientId != null && !clientId.isEmpty() && clientApiKey != null && !clientApiKey.isEmpty()
