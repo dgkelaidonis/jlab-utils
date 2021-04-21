@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import gr.iotlabsgr.commons.bits.BitUtils;
+import gr.dgk.utils.bits.BitUtils;
 
 public class BitUtilsTests {
     private String originalString;

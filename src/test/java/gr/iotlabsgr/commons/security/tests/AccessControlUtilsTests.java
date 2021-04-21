@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import gr.iotlabsgr.commons.security.AccessControlUtils;
+import gr.dgk.utils.security.AccessControlUtils;
 
 public class AccessControlUtilsTests {
 

@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
 import org.junit.Before;
 import org.junit.Test;
 
-import gr.iotlabsgr.commons.networking.IPv4Utils;
+import gr.dgk.utils.networking.IPv4Utils;
 
 public class IPv4UtilsTests {
     private String cidr, cidr_default_ip, cidr_default_ip_binary, cidr_first_ip_binary, cidr_last_ip_binary,

@@ -1,4 +1,4 @@
-package gr.iotlabsgr.commons.bits;
+package gr.dgk.utils.bits;
 
 import java.math.BigInteger;
 

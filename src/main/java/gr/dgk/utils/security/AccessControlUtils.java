@@ -1,10 +1,10 @@
-package gr.iotlabsgr.commons.security;
+package gr.dgk.utils.security;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import gr.iotlabsgr.commons.networking.IPv4Utils;
+import gr.dgk.utils.networking.IPv4Utils;
 
 public class AccessControlUtils {
 

@@ -1,4 +1,4 @@
-package gr.iotlabsgr.commons.datastructures;
+package gr.dgk.utils.datastructures;
 
 import java.util.ArrayList;
 import java.util.Collections;

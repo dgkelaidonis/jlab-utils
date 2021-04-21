@@ -1,4 +1,4 @@
-package gr.iotlabsgr.commons.networking;
+package gr.dgk.utils.networking;
 
 import java.math.BigInteger;
 import java.net.Inet4Address;
@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
-import gr.iotlabsgr.commons.bits.BitUtils;
+import gr.dgk.utils.bits.BitUtils;
 
 public class IPv4Utils {
 
